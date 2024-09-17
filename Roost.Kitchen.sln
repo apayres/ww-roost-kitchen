@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35303.130
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roost.Kitchen.App", "Roost.Kitchen.App\Roost.Kitchen.App.csproj", "{375D8864-7203-44D2-AC46-3A802E209FAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roost.Kitchen.Console", "Roost.Kitchen.Console\Roost.Kitchen.Console.csproj", "{55CB62FB-E53B-40D6-8E6C-FC854F737391}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{375D8864-7203-44D2-AC46-3A802E209FAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{375D8864-7203-44D2-AC46-3A802E209FAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{375D8864-7203-44D2-AC46-3A802E209FAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{375D8864-7203-44D2-AC46-3A802E209FAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55CB62FB-E53B-40D6-8E6C-FC854F737391}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55CB62FB-E53B-40D6-8E6C-FC854F737391}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55CB62FB-E53B-40D6-8E6C-FC854F737391}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55CB62FB-E53B-40D6-8E6C-FC854F737391}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EA51BEDD-64D3-4D4D-84E0-F46EF6C74A73}
+	EndGlobalSection
+EndGlobal

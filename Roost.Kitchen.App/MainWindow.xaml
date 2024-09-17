@@ -1,0 +1,179 @@
+﻿<Window x:Class="Roost.Kitchen.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Roost.Kitchen.App"
+        Icon="/Images/ww-logo.png"
+        mc:Ignorable="d"
+        Title="The Roost - Kitchen" 
+        ResizeMode="NoResize" 
+        SizeToContent="WidthAndHeight" 
+        WindowStyle="SingleBorderWindow">
+
+    <Grid Height="455" 
+          Width="800" 
+          Background="#ffffff">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="81*"/>
+            <ColumnDefinition Width="461*"/>
+            <ColumnDefinition Width="258*"/>
+        </Grid.ColumnDefinitions>
+
+        <Rectangle VerticalAlignment="Top"
+                   Height="10"
+                   Fill="#42332C" Grid.ColumnSpan="3"/>
+        <Image x:Name="Brewster" 
+               Source="/Images/menu-image.jpg"
+               HorizontalAlignment="Left" 
+               Height="80" 
+               Margin="25,0,0,0" 
+               VerticalAlignment="Top" 
+               Width="80" Grid.ColumnSpan="2"/>
+
+        <Label x:Name="lblHeader" 
+               Content="Order Fullfillment" 
+               HorizontalAlignment="Left" 
+               Margin="40,24,0,0" 
+               VerticalAlignment="Top"
+               FontSize="16"
+               FontWeight="Medium"
+               Foreground="#42332C" 
+               Width="146" Grid.Column="1"/>
+
+        <Label x:Name="label" 
+               Content="System" 
+               HorizontalAlignment="Left" 
+               Margin="40,46,0,0" 
+               VerticalAlignment="Top" 
+               FontSize="14" Grid.Column="1"/>
+
+        <Border Margin="25,100,0,0"  
+                BorderBrush="#cccccc" 
+                BorderThickness="1" 
+                CornerRadius="5" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" Grid.ColumnSpan="2">
+
+            <Grid HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Top">
+
+                <Label x:Name="lblOrderItems" 
+                        Content="Items" 
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Top"                   
+                        FontSize="16"
+                        Padding="10"
+                        FontWeight="Medium"
+                        Foreground="#42332C"/>
+
+                <Rectangle HorizontalAlignment="Stretch" 
+                           Height="1" 
+                           Margin="0,45,0,0" 
+                           Fill="#cccccc"   
+                           VerticalAlignment="Top"
+                           />
+
+                <ScrollViewer Height="216"
+                              Width="480"
+                              VerticalAlignment="Top"
+                              Margin="1,46,1,1"
+                              Background="#ffffff">
+
+                    <Grid x:Name="grdOrder">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="75" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+
+        <Border Margin="25,379,0,0"  
+                BorderBrush="#F4F2F2" 
+                BorderThickness="1" 
+                CornerRadius="5" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top"
+                Background="#F4F2F2" Grid.ColumnSpan="2">
+
+            <Grid HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Top" 
+                  Width="480" 
+                  Height="45"
+                  Margin="1">
+
+                <Button x:Name="btnOrderUp" 
+                        Content="Order Up!"
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Left" 
+                        Margin="397,0,10,0"         
+                        IsEnabled="False"
+                        Padding="10 5 10 5"
+                        Style="{DynamicResource PrimaryButton}">
+                </Button>
+            </Grid>
+        </Border>
+
+
+        <Border Margin="453,0,0,0"  
+                BorderBrush="#cccccc" 
+                BorderThickness="1" 
+                CornerRadius="5" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="1">
+
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                <Label x:Name="lblOrders" 
+                       Content="Incoming Orders" 
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Top"                   
+                       FontSize="16"
+                       Padding="10  "
+                       FontWeight="Medium"
+                       Foreground="#42332C"/>
+
+                <Rectangle HorizontalAlignment="Left" 
+                       Height="1" 
+                       Margin="0,45,0,0" 
+                       Fill="#cccccc" 
+                       VerticalAlignment="Top"
+                       Width="246"/>
+
+                <ScrollViewer x:Name="svIncomingOrders" 
+                          Margin="0,46,0,0" 
+                          Height="350" 
+                          VerticalAlignment="Top">
+
+                    <Grid x:Name="grdIncomingOrders">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="50" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+
+        <Border HorizontalAlignment="Left" 
+                Height="60" 
+                Margin="346,25,0,0"
+                Background="#F4F2F2"
+                BorderBrush="#cccccc"
+                VerticalAlignment="Top" 
+                Width="80"
+                CornerRadius="5" Grid.Column="1"/>
+
+        <TextBlock x:Name="txtOrderNumber" 
+                   HorizontalAlignment="Left" 
+                   Margin="346,43,0,0" 
+                   TextWrapping="Wrap" 
+                   Text="" 
+                   FontSize="16"
+                   TextAlignment="Center"
+                   FontWeight="Bold"
+                   VerticalAlignment="Top" Width="77" Grid.Column="1"/>
+    </Grid>
+</Window>
