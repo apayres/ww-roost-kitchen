@@ -9,5 +9,7 @@
         public int Quantity { get; set; }
 
         public decimal? Price { get; set; }
+
+        public List<Option> Options { set; get; } = new List<Option>();
     }
 }

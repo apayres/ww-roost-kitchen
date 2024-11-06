@@ -17,9 +17,9 @@ namespace Roost.Kitchen.App.Services
         {
             var client = new ServiceBusClient(_connection);
 
-            var reciever = client.CreateReceiver("orders");
+            var receiver = client.CreateReceiver("orders");
 
-            var messages = reciever.PeekMessagesAsync(10).Result;
+            var messages = receiver.PeekMessagesAsync(10).Result;
 
             return messages.Select(GetOrderFromMessage).ToList();
         }
@@ -29,7 +29,6 @@ namespace Roost.Kitchen.App.Services
             var order = JsonConvert.DeserializeObject<Order>(message.Body.ToString());
             order.OrderNumber = message.SequenceNumber;
             order.OrderDateTime = message.EnqueuedTime.ToLocalTime().DateTime;
-
             return order;
         }
     }

@@ -94,7 +94,9 @@ namespace Roost.Kitchen.App
         {
             var order = (Order)((Button)sender).Tag;
             txtOrderNumber.Text = "#" + order.OrderNumber.ToString();
+            lblName.Content = order.Name;
             btnOrderUp.IsEnabled = true;
+
             FillOrderGrid(order);
         }
 
@@ -111,13 +113,24 @@ namespace Roost.Kitchen.App
                 });
 
                 var lastRow = grdOrder.RowDefinitions.Count - 1;
+                                
+                var imageSource = new BitmapImage(new Uri(orderItem.Item.Images[0].AbsoluteUri, UriKind.Absolute));
 
-                var image = new Image()
+                var image = new Border()
                 {
+                    CornerRadius = new CornerRadius(300),
+                    Background = new ImageBrush()
+                    {
+                        Stretch = Stretch.Fill,
+                        ImageSource = imageSource,
+                        AlignmentX = AlignmentX.Center,
+                        AlignmentY = AlignmentY.Center
+                    },
+                    Height = 60,
+                    Width = 60,
                     HorizontalAlignment = HorizontalAlignment.Stretch,
                     VerticalAlignment = VerticalAlignment.Top,
-                    Margin = new Thickness(5),
-                    Source = new BitmapImage(new Uri(orderItem.Item.Images[0].AbsoluteUri, UriKind.Absolute))
+                    Margin = new Thickness(5)
                 };
 
                 grdOrder.Children.Add(image);
@@ -137,6 +150,25 @@ namespace Roost.Kitchen.App
                 Grid.SetRow(itemLabel, lastRow);
                 Grid.SetColumn(itemLabel, 1);
 
+                if (orderItem.Options != null && orderItem.Options.Any())
+                {
+                    var options = string.Join(", ", orderItem.Options.Select(x => $"{x.Name}: {x.Value}"));
+                    var optionsLabel = new Label()
+                    {
+                        Content = options,
+                        VerticalAlignment = VerticalAlignment.Top,
+                        HorizontalAlignment = HorizontalAlignment.Left,
+                        Padding = new Thickness(5),
+                        Margin = new Thickness(0, 30, 0, 0),
+                        FontSize = 10
+                    };
+
+                    grdOrder.Children.Add(optionsLabel);
+                    Grid.SetRow(optionsLabel, lastRow);
+                    Grid.SetColumn(optionsLabel, 1);
+                }
+
+
                 var qtyLabel = new Label()
                 {
                     Content = orderItem.Quantity,
@@ -153,6 +185,13 @@ namespace Roost.Kitchen.App
                 Grid.SetColumn(qtyLabel, 2);
             }
 
+        }
+
+        private void btnOrderUp_Click(object sender, RoutedEventArgs e)
+        {
+            grdOrder.Children.Clear();
+            lblName.Content = "Customer";
+            txtOrderNumber.Text = "";
         }
     }
 }

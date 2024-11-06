@@ -105,6 +105,12 @@
                   Height="45"
                   Margin="1">
 
+                <Label x:Name="lblName" 
+                       Content="Customer"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Margin="5"/>
+                
                 <Button x:Name="btnOrderUp" 
                         Content="Order Up!"
                         VerticalAlignment="Center" 
@@ -112,7 +118,7 @@
                         Margin="397,0,10,0"         
                         IsEnabled="False"
                         Padding="10 5 10 5"
-                        Style="{DynamicResource PrimaryButton}">
+                        Style="{DynamicResource PrimaryButton}" Click="btnOrderUp_Click">
                 </Button>
             </Grid>
         </Border>
