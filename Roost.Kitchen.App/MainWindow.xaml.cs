@@ -10,36 +10,46 @@ namespace Roost.Kitchen.App
 {
     public partial class MainWindow : Window
     {
-        private readonly OrderRetriever _orderRetriever;
+        private readonly OrderService _orderService;
+        private bool _isGettingIncomingOrders = false;
+        private Order _activeOrder = null;
         
         public MainWindow()
         {
-            _orderRetriever = new OrderRetriever(Properties.Settings.Default.AzureServiceBusConnectionString);
+            _orderService = new OrderService(Properties.Settings.Default.AzureServiceBusConnectionString);
             
             InitializeComponent();
 
             var dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(DispatcherTimer_Tick);
 
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 10);            
             dispatcherTimer.Start();
         }
 
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        private async void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            FillIncomingOrders(_orderRetriever.GetIncomingOrders());
+            if (_isGettingIncomingOrders)
+            {
+                return;
+            }
+
+            _isGettingIncomingOrders = true;
+
+            var orders = await _orderService.GetIncomingOrders();
+            FillIncomingOrders(orders);
+            
+            _isGettingIncomingOrders = false;
         }
                 
         private void FillIncomingOrders(List<Order> orders)
         {
-            grdIncomingOrders.Children.Clear();
-            grdIncomingOrders.RowDefinitions.Clear();
-
             foreach (var order in orders)
             {
                 grdIncomingOrders.RowDefinitions.Add(new RowDefinition()
                 {
-                    Height = new GridLength(0, GridUnitType.Auto)
+                    Height = new GridLength(0, GridUnitType.Auto),
+                    Tag = order.OrderNumber.ToString()
                 });
 
                 var lastRow = grdIncomingOrders.RowDefinitions.Count - 1;
@@ -92,10 +102,15 @@ namespace Roost.Kitchen.App
 
         private void OrderFillControl_Click(object sender, RoutedEventArgs e)
         {
-            var order = (Order)((Button)sender).Tag;
+            var button = (Button)sender;           
+
+            var order = (Order)button.Tag;
+            _activeOrder = order;
+
             txtOrderNumber.Text = "#" + order.OrderNumber.ToString();
             lblName.Content = order.Name;
             btnOrderUp.IsEnabled = true;
+            btnOrderUp.Tag = order.OrderNumber.ToString();
 
             FillOrderGrid(order);
         }
@@ -114,7 +129,7 @@ namespace Roost.Kitchen.App
 
                 var lastRow = grdOrder.RowDefinitions.Count - 1;
                                 
-                var imageSource = new BitmapImage(new Uri(orderItem.Item.Images[0].AbsoluteUri, UriKind.Absolute));
+                var imageSource = string.IsNullOrWhiteSpace(orderItem.Item?.ImageUrl) ? null : new BitmapImage(new Uri(orderItem.Item.ImageUrl, UriKind.Absolute));
 
                 var image = new Border()
                 {
@@ -187,8 +202,30 @@ namespace Roost.Kitchen.App
 
         }
 
-        private void btnOrderUp_Click(object sender, RoutedEventArgs e)
+        private async void btnOrderUp_Click(object sender, RoutedEventArgs e)
         {
+            if (_activeOrder != null)
+            {
+                await _orderService.CompleteOrder(_activeOrder);
+            }
+
+            var button = (Button)sender;
+
+            for (var i = 0; i < grdIncomingOrders.RowDefinitions.Count(); i++)
+            {
+                var row = grdIncomingOrders.RowDefinitions[i];
+                if(button.Tag == row.Tag)
+                {
+                    var children = grdIncomingOrders.Children.Cast<UIElement>().ToList();
+                    foreach(var child in children.Where(x => Grid.GetRow(x) == i))
+                    {
+                        grdIncomingOrders.Children.Remove(child);
+                    }
+
+                    break;
+                }
+            }
+
             grdOrder.Children.Clear();
             lblName.Content = "Customer";
             txtOrderNumber.Text = "";
