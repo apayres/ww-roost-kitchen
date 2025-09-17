@@ -11,5 +11,7 @@
         public decimal? Price { get; set; }
 
         public List<Option> Options { set; get; } = new List<Option>();
+
+        public List<Ingredient> Recipe { get; set; } = new List<Ingredient>();
     }
 }

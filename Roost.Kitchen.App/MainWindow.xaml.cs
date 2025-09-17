@@ -165,24 +165,55 @@ namespace Roost.Kitchen.App
                 Grid.SetRow(itemLabel, lastRow);
                 Grid.SetColumn(itemLabel, 1);
 
+                var marginOffset = 30;
                 if (orderItem.Options != null && orderItem.Options.Any())
                 {
-                    var options = string.Join(", ", orderItem.Options.Select(x => $"{x.Name}: {x.Value}"));
-                    var optionsLabel = new Label()
+                    foreach(var option in orderItem.Options)
                     {
-                        Content = options,
-                        VerticalAlignment = VerticalAlignment.Top,
-                        HorizontalAlignment = HorizontalAlignment.Left,
-                        Padding = new Thickness(5),
-                        Margin = new Thickness(0, 30, 0, 0),
-                        FontSize = 10
-                    };
+                        var optionsLabel = new Label()
+                        {
+                            Content = $"{option.Name}: {option.Value}",
+                            VerticalAlignment = VerticalAlignment.Top,
+                            HorizontalAlignment = HorizontalAlignment.Left,
+                            Padding = new Thickness(5),
+                            Margin = new Thickness(0, marginOffset, 0, 0),
+                            FontSize = 10
+                        };
 
-                    grdOrder.Children.Add(optionsLabel);
-                    Grid.SetRow(optionsLabel, lastRow);
-                    Grid.SetColumn(optionsLabel, 1);
+                        grdOrder.Children.Add(optionsLabel);
+                        Grid.SetRow(optionsLabel, lastRow);
+                        Grid.SetColumn(optionsLabel, 1);
+                        marginOffset += 15;
+                    }
                 }
 
+                if(orderItem.Recipe != null && orderItem.Recipe.Any())
+                {
+                    foreach (var ingredient in orderItem.Recipe)
+                    {
+                        var ingredientContent = $"{ingredient.ItemName}: {ingredient.Ratio}";
+
+                        if(ingredient.UnitOfMeasure != null)
+                        {
+                            ingredientContent += $" ({ingredient.UnitOfMeasure.Name})";
+                        }
+
+                        var ingredientLabel = new Label()
+                        {
+                            Content = ingredientContent,
+                            VerticalAlignment = VerticalAlignment.Top,
+                            HorizontalAlignment = HorizontalAlignment.Left,
+                            Padding = new Thickness(5),
+                            Margin = new Thickness(0, marginOffset, 0, 0),
+                            FontSize = 10
+                        };
+
+                        grdOrder.Children.Add(ingredientLabel);
+                        Grid.SetRow(ingredientLabel, lastRow);
+                        Grid.SetColumn(ingredientLabel, 1);
+                        marginOffset += 15;
+                    }
+                }
 
                 var qtyLabel = new Label()
                 {
